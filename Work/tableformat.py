@@ -43,6 +43,9 @@ class HTMLTableFormatter(TableFormatter):
  def row(self,rowdata):
   print('<tr><td>'+'</td><td>'.join(rowdata)+'</td></tr>')
 
+class FormatError(RuntimeError):
+      pass
+
 def create_formatter(fmt):
   if fmt=='txt':
         formatter=TextTableFormatter()
@@ -51,7 +54,7 @@ def create_formatter(fmt):
   elif fmt=='html':
         formatter=HTMLTableFormatter()
   else:
-        raise RuntimeError(f'Unknown format {fmt}')
+        raise FormatError(f'Unknown format {fmt}')
   return formatter
 
 from stock import Stock
