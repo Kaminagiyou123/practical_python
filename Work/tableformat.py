@@ -53,3 +53,16 @@ def create_formatter(fmt):
   else:
         raise RuntimeError(f'Unknown format {fmt}')
   return formatter
+
+from stock import Stock
+def print_table(portfolio,columns,formatter:TableFormatter):
+    '''
+    Print a nicely formated table from a list of (column names) tuples.
+    '''
+    rows=[]
+    formatter.headings(columns)
+    for reportdata in portfolio:
+      stock=Stock(reportdata['name'],str(reportdata['shares']),f'{0:.2f}'.format(reportdata['price']))
+      rowdata=[getattr(stock,colname) for colname in columns]
+      rows.append(rowdata)
+      formatter.row(rowdata)

@@ -1,2 +1,7 @@
 import report
-report.portfolio_report('Work/Data/portfolio.csv','Work/Data/prices.csv','txt')
+portfolio=report.read_portfolio('Work/Data/portfolio.csv')
+from tableformat import create_formatter,print_table
+formatter=create_formatter('txt')
+print_table(portfolio,['name','shares'],formatter)
+ 
+ 
