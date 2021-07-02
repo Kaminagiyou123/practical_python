@@ -1,8 +1,19 @@
 class Stock:
+ __slots__ = ('name','_shares','price')
  def __init__(self,name,shares,price):
   self.name=name
   self.shares=shares
   self.price=price
+  
+ @property
+ def shares(self):
+   return self._shares
+ 
+ @shares.setter
+ def shares(self,shares):
+   if  not isinstance (shares,int):
+     raise TypeError('Expected int')
+   self._shares=shares
   
  def __repr__(self):
    return f'Stock({self.name},{self.shares},{self.price})'
@@ -19,12 +30,9 @@ class MyStock(Stock):
   self.factor=factor
  def panic(self):
   self.sell(self.shares)
+  
+ @property
  def cost(self):
   return super().cost()* self.factor
   
-  
-s=MyStock(name='GOOG',shares=100,price=490.1,factor=1.25)
-s.sell(35)
-print(s.shares)
-print(s.shares)
-print(s.cost())
+s=Stock(name='GOOG',shares=100,price=490.1)
