@@ -8,13 +8,21 @@ from stock import Stock
 from portfolio import Portfolio
 
 
-def read_portfolio(filename):
+def read_portfolio(filename,silence_errors=False):
     '''
     Read a stock portfolio file into a list of dictionaries with keys
     name, shares, and price.
     '''
     portdicts= fileparse.parse_csv(filename, select=['name','shares','price'], types=[str,int,float])
-    portfolio=[Stock(d['name'],d['shares'],d['price']) for d in portdicts]
+    portfolio=[]
+    for rowno,d in enumerate(portdicts,1):
+     try:
+       portfolio.append(Stock(**d))
+     except ValueError as e:
+        if not silence_errors:
+                print(f"Row {rowno}: Couldn't convert {d}")
+                print(f"Row {rowno}: Reason {e}")
+        continue
     return Portfolio(portfolio)
 
 def read_prices(filename):

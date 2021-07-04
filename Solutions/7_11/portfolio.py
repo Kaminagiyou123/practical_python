@@ -5,7 +5,12 @@ import stock
 
 class Portfolio:
     def __init__(self):
-        self._holdings = []
+        self.holdings = []
+        
+    def append(self, holding):
+        if not isinstance(holding,stock.Stock):
+            raise TypeError('Expected a Stock Instance')
+        self.holdings.append(holding)
 
     @classmethod
     def from_csv(cls, lines, **opts):
@@ -14,14 +19,10 @@ class Portfolio:
                                         select=['name','shares','price'], 
                                         types=[str,int,float],
                                         **opts)
-
         for d in portdicts:
             self.append(stock.Stock(**d))
 
         return self
-
-    def append(self, holding):
-        self._holdings.append(holding)
 
     def __iter__(self):
         return self._holdings.__iter__()
