@@ -1,7 +1,4 @@
-from portfolio import Portfolio
-
-port=Portfolio.from_csv('Work/Data/portfolio.csv')
-
-print(port.holdings)
-
- 
+import logging
+import report
+logging.getLogger('fileparse').level=logging.DEBUG
+a=report.read_portfolio('Work/Data/missing.csv')
